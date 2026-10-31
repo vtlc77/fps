@@ -1,0 +1,6 @@
+# Dados de participantes: NUNCA no repositório.
+sessao_*.json
+sessao_*.json.gz
+dados/
+*.csv
+node_modules/
