@@ -71,13 +71,7 @@
   .placar .mini{font-size:13.5px;color:var(--ink2);margin-top:10px}
   .placar .recorde{display:inline-block;margin-top:12px;background:#17382E;color:#7FE3BC;
                    border-radius:99px;padding:4px 14px;font-size:12.5px;font-weight:600}
-  table.tab{width:100%;border-collapse:collapse;font-size:13.5px}
-  table.tab td{padding:5px 6px;border-bottom:1px solid var(--line);color:var(--ink2)}
-  table.tab tr:last-child td{border-bottom:0}
-  table.tab td:first-child{width:24px;color:var(--mut)}
-  table.tab .nm{color:var(--ink)}
-  table.tab .pt{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
-  table.tab tr.eu td{color:#7FE3BC}
+
 
   /* ---------------------------------------------------------- jogo */
   #jogo{display:none;position:absolute;inset:0;background:#0B0F14}
@@ -122,7 +116,7 @@
       distingue do movimento gerado por software de automação, analisando apenas a forma
       como o rato e as teclas são usados. O propósito final é detetar automação em jogos
       online sem ter de instalar programas de vigilância no computador dos jogadores.</p>
-    <p>Vai jogar uma tarefa curta de pontaria, com cerca de <b>seis minutos</b>.
+    <p>Vai jogar uma tarefa curta de pontaria, em três níveis, com cerca de <b>cinco minutos</b> no total.
       Não há nada a acertar nem a falhar que lhe diga respeito: o que interessa é a forma
       do movimento, não o seu desempenho.</p>
 
@@ -163,7 +157,7 @@
       dar explicação e sem consequência nenhuma. Como os dados são anónimos, depois de
       enviar o ficheiro já não é possível identificá-lo para o apagar — por isso a decisão
       de enviar é o momento em que o consentimento se torna definitivo.</p>
-    <p class="nota">Responsável: [A PREENCHER: nome] · [A PREENCHER: email]<br>
+    <p class="nota">Responsável: Diogo Lage · 50056610@europeia.pt<br>
       Orientação: [A PREENCHER: nome do orientador] · Universidade Europeia<br>
       Aprovação ética: [A PREENCHER: referência e data]</p>
 
@@ -256,16 +250,21 @@
     <h1>Como funciona</h1>
 
     <div class="card">
-      <h4>Duas partes, cerca de seis minutos no total</h4>
+      <h4>Três níveis, cerca de cinco minutos no total</h4>
       <ul>
-        <li><b>Parte 1 — calibração (cerca de 1 minuto).</b> Fica parado. Aparece um alvo de
-          cada vez, sempre nas mesmas posições para todos os participantes. Acerte e passa
-          ao seguinte.</li>
-        <li><b>Parte 2 — duas rondas de 90 segundos.</b> Pode andar. Vários alvos ao mesmo
-          tempo, uns parados e outros em movimento, alguns atrás de si. Há pontuação:
-          alvos pequenos, alvos em movimento e acertos seguidos valem mais. Entre as
-          rondas há uma pausa.</li>
+        <li><b>Nível 1 — Mira (cerca de 1 minuto).</b> Fica parado, só usa o rato. Um alvo de
+          cada vez, sempre nas mesmas posições para todos os participantes.</li>
+        <li><b>Nível 2 — Mira e movimento (75 segundos).</b> Já pode andar com
+          <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>. Os alvos aparecem longe e
+          à sua volta.</li>
+        <li><b>Nível 3 — Mira, movimento e cobertura (75 segundos).</b> Há pilares
+          fixos e blocos a atravessar a arena. Alvos tapados ficam a cinzento e os tiros
+          não contam: tem de se deslocar para ganhar ângulo — e sair da frente dos
+          blocos, que o empurram.</li>
       </ul>
+      <p class="nota" style="margin:8px 0 0">Há pontuação a partir do nível 2. Alvos
+        pequenos, alvos em movimento e acertos seguidos valem mais. Entre níveis há uma
+        pausa.</p>
     </div>
 
     <div class="grelha">
@@ -274,7 +273,7 @@
         <ul>
           <li><kbd>Rato</kbd> — olhar</li>
           <li><kbd>Botão esquerdo</kbd> — disparar</li>
-          <li><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> — andar (só na parte 2)</li>
+          <li><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> — andar (níveis 2 e 3)</li>
           <li><kbd>Shift</kbd> — andar devagar</li>
           <li><kbd>Esc</kbd> — libertar o rato e pausar</li>
         </ul>
@@ -300,6 +299,7 @@
       <button id="b-instr">Começar</button>
       <span class="nota">Ao clicar, o cursor fica preso à janela. <kbd>Esc</kbd> liberta-o.</span>
     </div>
+    <p class="nota" style="margin-top:18px;opacity:.6">versão <span id="versao"></span></p>
   </div>
 </section>
 
@@ -326,28 +326,14 @@
     <p class="lead">Falta um passo: descarregar o ficheiro e enviá-lo. Até o fazer, os dados
       existem apenas neste computador.</p>
 
-    <div class="grelha">
-      <div class="card" id="resumo"></div>
-      <div class="card">
-        <h4>Tabela de pontuações</h4>
-        <p class="nota" style="margin:0 0 10px">Fica guardada <b>só neste computador</b>.
-          A alcunha nunca entra no ficheiro de dados nem chega ao investigador: serve
-          apenas para se encontrar nesta lista.</p>
-        <div class="campo" style="display:flex;gap:8px;align-items:flex-end">
-          <div style="flex:1"><label for="f-alcunha">Alcunha (opcional)</label>
-            <input type="text" id="f-alcunha" maxlength="16" placeholder="como quiser"></div>
-          <button class="sec" id="b-tabela" style="padding:9px 14px">Entrar na tabela</button>
-        </div>
-        <div id="tabela"></div>
-      </div>
-    </div>
+    <div class="card" id="resumo"></div>
 
     <div class="barra">
       <button id="b-desc">Descarregar o ficheiro</button>
       <button class="sec" id="b-copia">Copiar o meu código</button>
     </div>
     <p class="nota" id="envio" style="margin-top:14px">
-      Envie o ficheiro para <b>[A PREENCHER: email]</b>. Não precisa de escrever nada no
+      Envie o ficheiro para <b>50056610@europeia.pt</b>. Não precisa de escrever nada no
       corpo da mensagem — o ficheiro já traz o código anónimo da sessão.</p>
 
     <div class="card" style="margin-top:22px">
@@ -369,17 +355,22 @@
    ========================================================================== */
 
 const CFG = {
-  calibAlvos: 20,          // nº de alvos do bloco de calibração
-  rondas: 2,               // o bloco livre é partido em rondas, com pausa e resumo
-  segundosPorRonda: 90,
-  jogoSegundos: 180,       // mantido por compatibilidade; ver segundosPorRonda
+  calibAlvos: 20,          // nº de alvos do nível 1 (sequência fixa, igual para todos)
+  segundosNivel2: 75,      // mira + movimento, campo aberto
+  segundosNivel3: 75,      // mira + movimento + obstáculos
+  nPilares: 7,
+  nBlocos: 4,
+  limiteArena: 16,
+  raioPilar: 0.9,
+  alturaPilar: 3.6,
+  raioJogador: 0.45,
   fovGraus: 90,
   raioAlvoPadrao: 0.42,    // metros
   distCalib: 14,           // distância fixa dos alvos de calibração
   velAndar: 4.2,           // m/s
   velDevagar: 1.9,
   maxAlvosVivos: 3,
-  versao: "aim-logger-1.0",
+  versao: "aim-logger-1.2",
 };
 
 /* ------------------------------------------------------------------ estado */
@@ -398,11 +389,12 @@ const S = {
   calibIdx: 0, calibSeq: [],
   disparos: 0, acertos: 0,
   pontos: 0, sequencia: 0, melhorSequencia: 0,
-  ronda: 0, rondas: [],          // resumo de cada ronda
+  nivel: 0, niveis: [],          // resumo de cada nível
+  obstaculos: [],
   efeitos: [],                   // feedback visual transitório
-  alcunha: null,                 // só localStorage, nunca no ficheiro de dados
   tFaseInicio: 0, tFim: 0,
-  pausado: false, correndo: false, entreRondas: false, rondaInicio: null,
+  pausado: false, correndo: false, entreRondas: false, aFechar: false, aAvancar: false,
+  nivelInicio: null, blocos: [],
 };
 
 const TECLAS_PERMITIDAS = new Set(
@@ -464,6 +456,8 @@ $("#b-form").addEventListener("click", () => {
 });
 
 /* ================================================================ 3. INSTRUÇÕES */
+$("#versao").textContent = CFG.versao;
+
 $("#f-sens").addEventListener("input", e => {
   S.sens = parseFloat(e.target.value);
   $("#sens-v").textContent = S.sens.toFixed(1) + " — pode experimentar no ecrã seguinte";
@@ -523,6 +517,7 @@ document.addEventListener(temRaw ? "pointerrawupdate" : "pointermove", aoMover, 
 document.addEventListener("keydown", e => {
   if (e.code === "Escape") return;            // o browser trata do pointer lock
   if (!S.correndo || !TECLAS_PERMITIDAS.has(e.code)) return;
+  // no nível 1 as teclas continuam a ser registadas, mas não movem a câmara
   e.preventDefault();
   if (!e.repeat) {                            // auto-repeat não é input novo
     S.teclas.push([+e.timeStamp.toFixed(3), e.code, 1]);
@@ -542,7 +537,7 @@ function aplicaMov(code, v) {
 }
 
 document.addEventListener("pointerdown", e => {
-  if (!S.correndo || S.pausado || e.button !== 0) return;
+  if (!S.correndo || S.pausado || S.entreRondas || e.button !== 0) return;
   S.eventos.push({ t: +e.timeStamp.toFixed(3), tipo: "botao", estado: "baixo" });
   dispara(e.timeStamp);
 });
@@ -558,7 +553,15 @@ async function pedeLock() {
     if (p && typeof p.then === "function") { await p; S.unadjusted = true; return; }
     S.unadjusted = null;                       // browser antigo: não dá para saber
   } catch (err) {
-    try { cv.requestPointerLock(); S.unadjusted = false; } catch (e2) { S.unadjusted = false; }
+    // o browser recusou o movimento sem aceleração; tenta o pedido simples.
+    // tem de ser aguardado, senão a rejeição fica por tratar e rebenta na consola
+    S.unadjusted = false;
+    try {
+      const p2 = cv.requestPointerLock();
+      if (p2 && typeof p2.then === "function") await p2;
+    } catch (e2) {
+      ev("pointerlock_recusado", { erro: String(e2 && e2.name || e2) });
+    }
   }
 }
 document.addEventListener("pointerlockchange", () => {
@@ -608,6 +611,219 @@ function erroAngular(alvo, B) {
   return Math.acos(c) * 180 / Math.PI;
 }
 
+/* -------------------------------------------------------------- obstáculos */
+/** Pilares verticais. Obrigam o jogador a reposicionar-se para ter ângulo,
+ *  que é precisamente o que gera dados de teclado em quantidade útil. */
+function geraObstaculos() {
+  const o = [];
+  for (let i = 0; i < CFG.nPilares; i++) {
+    const ang = (i / CFG.nPilares) * Math.PI * 2 + (i % 2) * 0.35;
+    const d = 5.5 + (i % 3) * 3.2;
+    o.push({ x: Math.cos(ang) * d, z: Math.sin(ang) * d,
+             r: CFG.raioPilar * (0.8 + (i % 3) * 0.18), h: CFG.alturaPilar });
+  }
+  return o;
+}
+
+/** Impede o jogador de entrar num pilar: empurra-o para fora pelo caminho curto. */
+function resolveColisao(px, pz) {
+  for (const o of S.obstaculos) {
+    const dx = px - o.x, dz = pz - o.z;
+    const d = Math.hypot(dx, dz), min = o.r + CFG.raioJogador;
+    if (d < min && d > 1e-6) { px = o.x + (dx / d) * min; pz = o.z + (dz / d) * min; }
+  }
+  return [px, pz];
+}
+
+/** O alvo está visível, ou há um pilar pelo meio? */
+function temLinhaDeVista(alvo) {
+  if (S.blocos.length && blocoTapa(alvo)) return false;
+  if (!S.obstaculos.length) return true;
+  const ox = S.cam.x, oz = S.cam.z, oy = S.cam.y;
+  const dx = alvo.x - ox, dz = alvo.z - oz, dy = alvo.y - oy;
+  const comp = Math.hypot(dx, dz);
+  if (comp < 1e-6) return true;
+  const ux = dx / comp, uz = dz / comp;
+  for (const o of S.obstaculos) {
+    // interseção raio-círculo no plano XZ
+    const fx = ox - o.x, fz = oz - o.z;
+    const b = 2 * (fx * ux + fz * uz);
+    const c = fx * fx + fz * fz - o.r * o.r;
+    const disc = b * b - 4 * c;
+    if (disc < 0) continue;
+    const raiz = Math.sqrt(disc);
+    for (const t of [(-b - raiz) / 2, (-b + raiz) / 2]) {
+      if (t <= 0.1 || t >= comp) continue;
+      const alturaAi = oy + dy * (t / comp);   // altura do raio nesse ponto
+      if (alturaAi < o.h) return false;        // o pilar tapa
+    }
+  }
+  return true;
+}
+
+/* ------------------------------------------- blocos móveis (nível 3) --------
+ * Atravessam a arena em linha reta ao longo de X ou de Z. O jogador tem de se
+ * desviar, o que é o que gera toques curtos e mudanças de direção no teclado. */
+function geraBlocos() {
+  const b = [];
+  for (let i = 0; i < CFG.nBlocos; i++) {
+    const eixoX = i % 2 === 0;
+    const lado = (i % 4 < 2) ? 1 : -1;
+    const offset = -14 + (i * 7.3) % 28;
+    b.push({
+      eixoX,
+      x: eixoX ? -CFG.limiteArena * lado : offset,
+      z: eixoX ? offset : -CFG.limiteArena * lado,
+      lx: eixoX ? 1.6 : 3.2, lz: eixoX ? 3.2 : 1.6,
+      h: 2.4,
+      v: (1.7 + (i % 3) * 0.75) * lado,
+    });
+  }
+  return b;
+}
+
+function moveBlocos(dt) {
+  const L = CFG.limiteArena + 4;
+  for (const b of S.blocos) {
+    if (b.eixoX) { b.x += b.v * dt; if (Math.abs(b.x) > L) b.x = -Math.sign(b.v) * L; }
+    else         { b.z += b.v * dt; if (Math.abs(b.z) > L) b.z = -Math.sign(b.v) * L; }
+  }
+}
+
+/** Empurra o jogador para fora de um bloco, pelo lado mais próximo. */
+function resolveBlocos(px, pz) {
+  const r = CFG.raioJogador;
+  for (const b of S.blocos) {
+    const hx = b.lx / 2 + r, hz = b.lz / 2 + r;
+    const dx = px - b.x, dz = pz - b.z;
+    if (Math.abs(dx) < hx && Math.abs(dz) < hz) {
+      // sai pelo eixo onde a sobreposição é menor
+      const folgaX = hx - Math.abs(dx), folgaZ = hz - Math.abs(dz);
+      if (folgaX < folgaZ) px = b.x + Math.sign(dx || 1) * hx;
+      else                 pz = b.z + Math.sign(dz || 1) * hz;
+      if (!b.tocouEm || agora() - b.tocouEm > 900) {
+        b.tocouEm = agora();
+        ev("bloco_toque", { nivel: S.nivel, eixo: b.eixoX ? "x" : "z" });
+      }
+    }
+  }
+  return [px, pz];
+}
+
+/** Um bloco entre a câmara e o alvo também tapa a linha de vista. */
+function blocoTapa(alvo) {
+  const ox = S.cam.x, oz = S.cam.z, oy = S.cam.y;
+  const dx = alvo.x - ox, dz = alvo.z - oz, dy = alvo.y - oy;
+  const comp = Math.hypot(dx, dz);
+  if (comp < 1e-6) return false;
+  for (const b of S.blocos) {
+    // interseção raio-AABB no plano XZ (slab method)
+    let t0 = 0, t1 = comp;
+    const eixos = [[ox, dx / comp, b.x, b.lx / 2], [oz, dz / comp, b.z, b.lz / 2]];
+    let ok = true;
+    for (const [o, d, c, meio] of eixos) {
+      if (Math.abs(d) < 1e-9) { if (o < c - meio || o > c + meio) { ok = false; break; } continue; }
+      let ta = (c - meio - o) / d, tb = (c + meio - o) / d;
+      if (ta > tb) { const tmp = ta; ta = tb; tb = tmp; }
+      t0 = Math.max(t0, ta); t1 = Math.min(t1, tb);
+      if (t0 > t1) { ok = false; break; }
+    }
+    if (ok && t0 > 0.1 && t0 < comp) {
+      if (oy + dy * (t0 / comp) < b.h) return true;
+    }
+  }
+  return false;
+}
+
+function desenhaBloco(b, B) {
+  const hx = b.lx / 2, hz = b.lz / 2;
+  const cantos = [];
+  for (const [sx, sz] of [[-1,-1],[1,-1],[1,1],[-1,1]])
+    for (const y of [0, b.h])
+      cantos.push(projetaPonto({ x: b.x + sx * hx, y, z: b.z + sz * hz }, B));
+  if (cantos.some(c => !c)) return;
+  // silhueta: fecho convexo dos 8 cantos projetados
+  const pts = cantos.map(c => [c.sx, c.sy]).sort((p, q) => p[0] - q[0] || p[1] - q[1]);
+  const cruz = (o, a, c) => (a[0]-o[0])*(c[1]-o[1]) - (a[1]-o[1])*(c[0]-o[0]);
+  const meio = [];
+  for (const p of pts) { while (meio.length >= 2 && cruz(meio[meio.length-2], meio[meio.length-1], p) <= 0) meio.pop(); meio.push(p); }
+  const cima = [];
+  for (let i = pts.length - 1; i >= 0; i--) { const p = pts[i];
+    while (cima.length >= 2 && cruz(cima[cima.length-2], cima[cima.length-1], p) <= 0) cima.pop(); cima.push(p); }
+  const hull = meio.slice(0, -1).concat(cima.slice(0, -1));
+  if (hull.length < 3) return;
+
+  const d = Math.hypot(b.x - S.cam.x, b.z - S.cam.z);
+  const prox = Math.max(0, Math.min(1, 1 - d / 34));
+  ctx.beginPath(); ctx.moveTo(hull[0][0], hull[0][1]);
+  for (let i = 1; i < hull.length; i++) ctx.lineTo(hull[i][0], hull[i][1]);
+  ctx.closePath();
+  const c = Math.round(44 + 26 * prox);
+  ctx.fillStyle = "rgb(" + (c + 14) + "," + (c - 6) + "," + (c - 14) + ")";   // tom quente
+  ctx.fill();
+  ctx.strokeStyle = "rgba(230,150,120,.55)"; ctx.lineWidth = 1.4 * DPR; ctx.stroke();
+
+  // face de cima, para ler como volume e não como mancha
+  const topo = [cantos[1], cantos[3], cantos[5], cantos[7]];
+  ctx.beginPath(); ctx.moveTo(topo[0].sx, topo[0].sy);
+  for (let i = 1; i < 4; i++) ctx.lineTo(topo[i].sx, topo[i].sy);
+  ctx.closePath();
+  ctx.fillStyle = "rgba(255,190,160,.16)"; ctx.fill();
+}
+
+function desenhaObstaculo(o, B) {
+  const dx = o.x - S.cam.x, dz = o.z - S.cam.z;
+  const d = Math.hypot(dx, dz);
+  if (d < 1e-6) return;
+  const px = -dz / d * o.r, pz = dx / d * o.r;   // perpendicular à linha de visão
+  const A = { x: o.x + px, z: o.z + pz }, C = { x: o.x - px, z: o.z - pz };
+  const p = [
+    projetaPonto({ x: A.x, y: 0,   z: A.z }, B),
+    projetaPonto({ x: C.x, y: 0,   z: C.z }, B),
+    projetaPonto({ x: C.x, y: o.h, z: C.z }, B),
+    projetaPonto({ x: A.x, y: o.h, z: A.z }, B),
+  ];
+  if (p.some(c => !c)) return;
+
+  // sombra de contacto no chão: é isto que faz o pilar assentar
+  const base = projetaPonto({ x: o.x, y: 0, z: o.z }, B);
+  if (base) {
+    const larg = Math.abs(p[1].sx - p[0].sx) / 2;
+    ctx.beginPath();
+    ctx.ellipse(base.sx, base.sy, Math.max(larg * 1.15, 2), Math.max(larg * 0.34, 1),
+                0, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(0,0,0,.5)"; ctx.fill();
+  }
+
+  // corpo, com gradiente lateral para sugerir a curvatura do cilindro
+  const prox = Math.max(0, Math.min(1, 1 - d / 34));
+  const g = ctx.createLinearGradient(p[0].sx, 0, p[1].sx, 0);
+  const c1 = Math.round(20 + 14 * prox), c2 = Math.round(34 + 22 * prox);
+  g.addColorStop(0,    "rgb(" + c1 + "," + (c1 + 9) + "," + (c1 + 16) + ")");
+  g.addColorStop(0.42, "rgb(" + c2 + "," + (c2 + 11) + "," + (c2 + 18) + ")");
+  g.addColorStop(1,    "rgb(" + c1 + "," + (c1 + 9) + "," + (c1 + 16) + ")");
+  ctx.beginPath();
+  ctx.moveTo(p[0].sx, p[0].sy);
+  for (let i = 1; i < 4; i++) ctx.lineTo(p[i].sx, p[i].sy);
+  ctx.closePath();
+  ctx.fillStyle = g; ctx.fill();
+
+  // tampo: elipse que fecha o cilindro em cima
+  const topo = projetaPonto({ x: o.x, y: o.h, z: o.z }, B);
+  if (topo && topo.sy < p[3].sy + 4) {
+    const larg = Math.abs(p[2].sx - p[3].sx) / 2;
+    ctx.beginPath();
+    ctx.ellipse(topo.sx, topo.sy, Math.max(larg, 1), Math.max(larg * 0.3, 0.6), 0, 0, Math.PI * 2);
+    ctx.fillStyle = "rgb(" + (c2 + 12) + "," + (c2 + 23) + "," + (c2 + 32) + ")";
+    ctx.fill();
+  }
+  ctx.strokeStyle = "rgba(130,170,200,.26)"; ctx.lineWidth = 1.1 * DPR;
+  ctx.beginPath();
+  ctx.moveTo(p[0].sx, p[0].sy); ctx.lineTo(p[3].sx, p[3].sy);
+  ctx.moveTo(p[1].sx, p[1].sy); ctx.lineTo(p[2].sx, p[2].sy);
+  ctx.stroke();
+}
+
 /* ------------------------------------------------------------------- alvos */
 function criaAlvo(cfg) {
   const a = Object.assign({
@@ -615,8 +831,12 @@ function criaAlvo(cfg) {
     vx: 0, vz: 0, nascido: agora(), primeiroMov: null,
   }, cfg);
   S.alvos.push(a);
-  ev("alvo_aparece", { id: a.id, x: +a.x.toFixed(3), y: +a.y.toFixed(3), z: +a.z.toFixed(3),
+  ev("alvo_aparece", { id: a.id, nivel: S.nivel,
+                       x: +a.x.toFixed(3), y: +a.y.toFixed(3), z: +a.z.toFixed(3),
                        raio: a.r, movel: !!(a.vx || a.vz),
+                       tapado: (S.obstaculos.length || S.blocos.length)
+                         ? !temLinhaDeVista(a) : false,
+                       posJogador: { x: +S.cam.x.toFixed(2), z: +S.cam.z.toFixed(2) },
                        erroAngularInicial: +erroAngular(a, baseCam()).toFixed(3) });
   return a;
 }
@@ -648,22 +868,39 @@ function geraCalib() {
 }
 
 function proximoCalib() {
-  if (S.calibIdx >= S.calibSeq.length) { iniciaBlocoJogo(); return; }
+  if (S.calibIdx >= S.calibSeq.length) { fimDoNivel(); return; }
   const c = S.calibSeq[S.calibIdx++];
   criaAlvo(c);
 }
 
 function alvoAleatorio() {
+  // No nível 3 cerca de metade dos alvos nasce sem linha de vista, para obrigar
+  // a deslocar-se. A posição é testada ANTES de o alvo existir, para não sujar
+  // os eventos com alvos descartados.
+  const querTapado = S.nivel === 3 && Math.random() < 0.55;
+  const alcance = S.nivel === 2 ? [12, 25] : [10, 23];
+  for (let tent = 0; tent < 16; tent++) {
+    const c = posicaoCandidata(alcance);
+    const tapado = (S.obstaculos.length || S.blocos.length) && !temLinhaDeVista(c);
+    if (tent === 15 || tapado === querTapado) return criaAlvoEm(c);
+  }
+}
+
+function posicaoCandidata([dmin, dmax]) {
   const ang = Math.random() * Math.PI * 2;
-  const d = 9 + Math.random() * 14;
-  const movel = Math.random() < 0.4;
-  const a = criaAlvo({
-    x: S.cam.x + Math.sin(ang) * d,
+  const d = dmin + Math.random() * (dmax - dmin);
+  const lim = CFG.limiteArena - 1;
+  return {
+    x: Math.max(-lim, Math.min(lim, S.cam.x + Math.sin(ang) * d)),
     y: 1.1 + Math.random() * 1.9,
-    z: S.cam.z - Math.cos(ang) * d,
+    z: Math.max(-lim, Math.min(lim, S.cam.z - Math.cos(ang) * d)),
     r: 0.30 + Math.random() * 0.26,
-  });
-  if (movel) {
+  };
+}
+
+function criaAlvoEm(c) {
+  const a = criaAlvo(c);
+  if (Math.random() < (S.nivel === 3 ? 0.25 : 0.4)) {
     const v = 1.2 + Math.random() * 2.0, dir = Math.random() * Math.PI * 2;
     a.vx = Math.cos(dir) * v; a.vz = Math.sin(dir) * v;
   }
@@ -695,31 +932,35 @@ function efeito(tipo, alvo, texto) {
 function dispara(t) {
   const B = baseCam();
   S.disparos++;
-  let melhor = null, melhorErro = Infinity;
+  let melhor = null, melhorErro = Infinity, bloqueado = false;
   for (const a of S.alvos) {
     const e = erroAngular(a, B);
     const p = projeta(a, B);
     if (!p) continue;
     const limite = Math.asin(Math.min(1, a.r / Math.max(p.dist, a.r))) * 180 / Math.PI;
-    if (e <= limite && e < melhorErro) { melhor = a; melhorErro = e; }
+    if (e <= limite) {
+      if (!temLinhaDeVista(a)) { bloqueado = true; continue; }   // pilar pelo meio
+      if (e < melhorErro) { melhor = a; melhorErro = e; }
+    }
     if (e < melhorErro && !melhor) melhorErro = e;
   }
   if (melhor) {
     S.acertos++;
-    const sc = S.fase === "jogo" ? pontuaAcerto(melhor, t) : { pontos: 0, mult: 1 };
+    const sc = S.nivel >= 2 ? pontuaAcerto(melhor, t) : { pontos: 0, mult: 1 };
     efeito("acerto", melhor, sc.pontos ? "+" + sc.pontos : null);
     ev("disparo", { acertou: true, alvo: melhor.id,
       erroGraus: +melhorErro.toFixed(4),
       tempoDesdeAparecer: +(t - melhor.nascido).toFixed(3),
       tempoDesdePrimeiroMov: melhor.primeiroMov == null ? null
         : +(t - melhor.primeiroMov).toFixed(3),
-      pontos: sc.pontos, sequencia: S.sequencia, fase: S.fase, ronda: S.ronda });
+      pontos: sc.pontos, sequencia: S.sequencia, fase: S.fase, nivel: S.nivel });
     S.alvos = S.alvos.filter(a => a !== melhor);
-    if (S.fase === "calib") proximoCalib(); else alvoAleatorio();
+    if (S.nivel === 1) proximoCalib(); else alvoAleatorio();
   } else {
-    if (S.fase === "jogo") S.sequencia = 0;
+    if (S.nivel >= 2) S.sequencia = 0;
     S.efeitos.push({ tipo: "falha", t0: agora() });
-    ev("disparo", { acertou: false, fase: S.fase, ronda: S.ronda,
+    ev("disparo", { acertou: false, fase: S.fase, nivel: S.nivel,
+      bloqueadoPorPilar: bloqueado,
       erroGraus: Number.isFinite(melhorErro) ? +melhorErro.toFixed(4) : null });
   }
   atualizaHud();
@@ -736,15 +977,25 @@ function frame(t) {
     const B = baseCam();
 
     // movimento do jogador (só no bloco livre)
-    if (S.fase === "jogo") {
+    if (S.nivel >= 2) {
       const vel = S.mov.shift ? CFG.velDevagar : CFG.velAndar;
       const fr = (S.mov.w - S.mov.s), la = (S.mov.d - S.mov.a);
       if (fr || la) {
         const n = Math.hypot(fr, la) || 1;
         const hx = Math.sin(S.cam.yaw), hz = -Math.cos(S.cam.yaw);
-        S.cam.x += ((hx * fr + B.r.x * la) / n) * vel * dt;
-        S.cam.z += ((hz * fr + B.r.z * la) / n) * vel * dt;
+        let nx = S.cam.x + ((hx * fr + B.r.x * la) / n) * vel * dt;
+        let nz = S.cam.z + ((hz * fr + B.r.z * la) / n) * vel * dt;
+        const lim = CFG.limiteArena;                     // arena limitada
+        nx = Math.max(-lim, Math.min(lim, nx));
+        nz = Math.max(-lim, Math.min(lim, nz));
+        [nx, nz] = resolveColisao(nx, nz);
+        [S.cam.x, S.cam.z] = resolveBlocos(nx, nz);
       }
+    }
+
+    if (S.blocos.length) {
+      moveBlocos(dt);
+      [S.cam.x, S.cam.z] = resolveBlocos(S.cam.x, S.cam.z);   // apanha quem fica parado
     }
 
     // alvos móveis
@@ -779,11 +1030,26 @@ function desenha(B) {
   ctx.strokeStyle = "#24323F"; ctx.lineWidth = 1 * DPR;
   ctx.beginPath(); ctx.moveTo(0, hor); ctx.lineTo(LARG, hor); ctx.stroke();
 
-  // alvos, do mais longe para o mais perto
+  // pilares e alvos numa só lista, do mais longe para o mais perto,
+  // para a oclusão sair correta sem buffer de profundidade
+  const cena = [];
+  for (const o of S.obstaculos) {
+    const prof = Math.hypot(o.x - S.cam.x, o.z - S.cam.z);
+    cena.push({ prof, pilar: o });
+  }
+  for (const b of S.blocos) {
+    cena.push({ prof: Math.hypot(b.x - S.cam.x, b.z - S.cam.z), bloco: b });
+  }
   const vis = [];
-  for (const a of S.alvos) { const p = projeta(a, B); if (p) vis.push([a, p]); }
-  vis.sort((u, v) => v[1].prof - u[1].prof);
-  for (const [a, p] of vis) {
+  for (const a of S.alvos) {
+    const p = projeta(a, B);
+    if (p) { vis.push([a, p]); cena.push({ prof: p.prof, alvo: a, p }); }
+  }
+  cena.sort((u, v) => v.prof - u.prof);
+  for (const item of cena) {
+    if (item.pilar) { desenhaObstaculo(item.pilar, B); continue; }
+    if (item.bloco) { desenhaBloco(item.bloco, B); continue; }
+    const a = item.alvo, p = item.p;
     // sombra no chão, para dar profundidade
     const ch = projetaPonto({ x: a.x, y: 0, z: a.z }, B);
     if (ch) {
@@ -792,7 +1058,9 @@ function desenha(B) {
       ctx.fillStyle = "rgba(0,0,0,.45)"; ctx.fill();
     }
     ctx.beginPath(); ctx.arc(p.sx, p.sy, p.sr, 0, Math.PI * 2);
-    ctx.fillStyle = (a.vx || a.vz) ? "#D2503A" : "#2B86A4"; ctx.fill();
+    const tapado = (S.obstaculos.length || S.blocos.length) && !temLinhaDeVista(a);
+    ctx.fillStyle = tapado ? "#4A5968" : (a.vx || a.vz) ? "#D2503A" : "#2B86A4";
+    ctx.fill();
     ctx.lineWidth = 2 * DPR; ctx.strokeStyle = "rgba(255,255,255,.65)"; ctx.stroke();
     ctx.beginPath(); ctx.arc(p.sx, p.sy, Math.max(p.sr * 0.2, 1.5 * DPR), 0, Math.PI * 2);
     ctx.fillStyle = "rgba(255,255,255,.9)"; ctx.fill();
@@ -890,7 +1158,16 @@ function projetaPonto(pt, B) {
   return { sx: LARG / 2 + FOCAL * dot(v, B.r) / prof, sy: ALT / 2 - FOCAL * dot(v, B.u) / prof };
 }
 
-/* ------------------------------------------------------------------- blocos */
+/* ------------------------------------------------------------------- níveis */
+const NIVEIS = {
+  1: { nome: "Mira", desc: "Fique parado. Só o rato. Acerte em cada alvo que aparecer.",
+       movimento: false, obstaculos: false },
+  2: { nome: "Mira e movimento", desc: "Agora pode andar com W A S D. Os alvos aparecem longe: aproxime-se.",
+       movimento: true, obstaculos: false },
+  3: { nome: "Mira, movimento e cobertura", desc: "Pilares fixos e blocos em movimento. Alvos tapados ficam a cinzento: desloque-se para ganhar ângulo, e saia da frente dos blocos.",
+       movimento: true, obstaculos: true },
+};
+
 async function iniciar() {
   mostra("jogo");
   redimensiona();
@@ -900,74 +1177,102 @@ async function iniciar() {
                         rawUpdate: temRaw, dpr: DPR, larg: LARG, alt: ALT,
                         crossOriginIsolated: (typeof crossOriginIsolated !== "undefined")
                           ? crossOriginIsolated : null,
-                        gamificacao: true });
-  iniciaBlocoCalib();
+                        gamificacao: true, niveis: 3 });
+  S.nivel = 0;
+  proximoNivel();
   tAnterior = agora();
   requestAnimationFrame(frame);
 }
 
-function iniciaBlocoCalib() {
-  S.fase = "calib"; S.tFaseInicio = agora();
-  S.calibSeq = geraCalib(); S.calibIdx = 0; S.alvos = [];
+let tokenTransicao = 0;
+
+function proximoNivel() {
+  if (S.aAvancar) return;          // nunca avançar dois níveis no mesmo gesto
+  S.aAvancar = true;
+  try { avancaNivel(); } finally { S.aAvancar = false; }
+}
+
+function avancaNivel() {
+  S.nivel++;
+  const n = NIVEIS[S.nivel];
+  if (!n) { terminar(); return; }
+
+  S.fase = "n" + S.nivel;
+  S.aFechar = false;
+  S.tFaseInicio = agora();
+  S.alvos = []; S.sequencia = 0;
   S.cam = { x: 0, y: 1.65, z: 0, yaw: 0, pitch: 0 };
-  ev("bloco_inicio", { bloco: "calibracao", nAlvos: CFG.calibAlvos });
-  caixaMsg("Parte 1 — calibração", "Fique parado. Acerte em cada alvo que aparecer.", 2200);
-  proximoCalib();
+  S.obstaculos = n.obstaculos ? geraObstaculos() : [];
+  S.blocos = n.obstaculos ? geraBlocos() : [];
+  S.nivelInicio = { pontos: S.pontos, acertos: S.acertos, disparos: S.disparos,
+                    teclas: S.teclas.length, t: agora() };
+
+  ev("nivel_inicio", { nivel: S.nivel, nome: n.nome,
+                       movimento: n.movimento, obstaculos: n.obstaculos,
+                       nPilares: S.obstaculos.length, nBlocos: S.blocos.length,
+                       pilares: S.obstaculos.map(o => ({ x: +o.x.toFixed(2),
+                         z: +o.z.toFixed(2), r: +o.r.toFixed(2), h: o.h })),
+                       duracao: S.nivel === 1 ? null
+                         : (S.nivel === 2 ? CFG.segundosNivel2 : CFG.segundosNivel3) });
+
+  caixaMsg("Nível " + S.nivel + " de 3 — " + n.nome, n.desc, 3200);
+
+  if (S.nivel === 1) {
+    S.calibSeq = geraCalib(); S.calibIdx = 0;
+    proximoCalib();
+  } else {
+    for (let i = 0; i < CFG.maxAlvosVivos; i++) alvoAleatorio();
+  }
   atualizaHud();
 }
 
-function iniciaBlocoJogo() {
-  ev("bloco_fim", { bloco: "calibracao" });
-  S.fase = "jogo"; S.ronda = 0;
-  iniciaRonda();
-}
-
-function iniciaRonda() {
-  S.ronda++;
-  S.tFaseInicio = agora(); S.alvos = []; S.sequencia = 0;
-  S.rondaInicio = { pontos: S.pontos, acertos: S.acertos, disparos: S.disparos };
-  ev("bloco_inicio", { bloco: "livre", ronda: S.ronda, segundos: CFG.segundosPorRonda });
-  caixaMsg("Ronda " + S.ronda + " de " + CFG.rondas,
-    S.ronda === 1
-      ? "Agora pode andar com W A S D. Acertos seguidos valem mais pontos."
-      : "Última ronda. Tente bater a pontuação anterior.", 2600);
-  for (let i = 0; i < CFG.maxAlvosVivos; i++) alvoAleatorio();
-  atualizaHud();
-}
-
-function fimDaRonda() {
+function fimDoNivel() {
+  if (S.aFechar) return;             // o relógio e o último alvo podiam chamar os dois
+  S.aFechar = true;
+  const i = S.nivelInicio;
   const r = {
-    ronda: S.ronda,
-    pontos: S.pontos - S.rondaInicio.pontos,
-    acertos: S.acertos - S.rondaInicio.acertos,
-    disparos: S.disparos - S.rondaInicio.disparos,
+    nivel: S.nivel, nome: NIVEIS[S.nivel].nome,
+    pontos: S.pontos - i.pontos,
+    acertos: S.acertos - i.acertos,
+    disparos: S.disparos - i.disparos,
+    eventosTeclado: S.teclas.length - i.teclas,
+    duracaoS: +((agora() - i.t) / 1000).toFixed(1),
     melhorSequencia: S.melhorSequencia,
   };
   r.precisao = r.disparos ? Math.round(100 * r.acertos / r.disparos) : 0;
-  S.rondas.push(r);
-  ev("bloco_fim", { bloco: "livre", ronda: S.ronda, resumo: r });
+  r.teclasPorSegundo = +(r.eventosTeclado / Math.max(r.duracaoS, 1)).toFixed(2);
+  S.niveis.push(r);
+  ev("nivel_fim", { nivel: S.nivel, resumo: r });
   S.alvos = [];
 
-  if (S.ronda >= CFG.rondas) { terminar(); return; }
+  if (S.nivel >= 3) { terminar(); return; }
 
   S.pausado = true; S.entreRondas = true;
   if (document.pointerLockElement) document.exitPointerLock();
-  caixaMsg("Fim da ronda " + r.ronda,
+  caixaMsg("Nível " + r.nivel + " concluído",
     r.pontos.toLocaleString("pt-PT") + " pontos  ·  " + r.acertos + " alvos  ·  " +
-    r.precisao + " % de precisão\n\nClique para começar a ronda seguinte.");
+    r.precisao + " % de precisão\n\nClique para começar o nível seguinte.");
+  // um token por transição: se por alguma razão ficar um listener antigo
+  // pendurado, ele vê um token desatualizado e não faz nada
+  const meuToken = ++tokenTransicao;
   const retomar = async () => {
     cv.removeEventListener("click", retomar);
-    caixaMsg(null); S.pausado = false; S.entreRondas = false;
+    if (meuToken !== tokenTransicao) return;       // transição já foi tratada
+    tokenTransicao++;                              // invalida qualquer outro
+    caixaMsg(null);
     await pedeLock();
-    iniciaRonda();
+    // só agora se levanta a pausa: avancaNivel() acerta o relógio primeiro,
+    // senão o cronómetro do nível anterior ainda corre durante o await
+    proximoNivel();
+    S.pausado = false; S.entreRondas = false;
   };
-  cv.addEventListener("click", retomar);
+  cv.addEventListener("click", retomar, { once: true });
 }
 
 function verificaTempo(t) {
-  if (S.fase !== "jogo" || S.pausado) return;
-  const resta = CFG.segundosPorRonda - (t - S.tFaseInicio) / 1000;
-  if (resta <= 0) fimDaRonda();
+  if (S.pausado || S.nivel === 1) return;           // o nível 1 acaba pelos alvos
+  const limite = S.nivel === 2 ? CFG.segundosNivel2 : CFG.segundosNivel3;
+  if ((t - S.tFaseInicio) / 1000 >= limite) fimDoNivel();
 }
 
 let msgTimer = null;
@@ -982,8 +1287,7 @@ function caixaMsg(titulo, texto, ms) {
 }
 
 function atualizaHud() {
-  $("#h-fase").textContent = S.fase === "calib" ? "Treino"
-    : S.fase === "jogo" ? ("Ronda " + S.ronda) : "—";
+  $("#h-fase").textContent = S.nivel >= 1 && S.nivel <= 3 ? ("Nível " + S.nivel) : "—";
   const el = $("#h-pontos");
   el.textContent = S.pontos.toLocaleString("pt-PT");
   el.classList.remove("pulsa"); void el.offsetWidth; el.classList.add("pulsa");
@@ -993,11 +1297,12 @@ function atualizaHud() {
   $("#h-acerto").textContent = S.disparos ? Math.round(100 * S.acertos / S.disparos) + "%" : "—";
 }
 setInterval(() => {
-  if (S.fase === "jogo" && !S.pausado && S.correndo) {
-    const r = Math.max(0, CFG.segundosPorRonda - (agora() - S.tFaseInicio) / 1000);
+  if (S.nivel >= 2 && S.nivel <= 3 && !S.pausado && S.correndo) {
+    const lim = S.nivel === 2 ? CFG.segundosNivel2 : CFG.segundosNivel3;
+    const r = Math.max(0, lim - (agora() - S.tFaseInicio) / 1000);
     $("#h-tempo").textContent = Math.ceil(r) + "s";
-  } else if (S.fase === "calib") {
-    $("#h-tempo").textContent = (S.calibSeq.length - S.calibIdx + 1) + " alvos";
+  } else if (S.nivel === 1 && S.calibSeq) {
+    $("#h-tempo").textContent = Math.max(0, S.calibSeq.length - S.calibIdx + 1) + " alvos";
   }
 }, 200);
 
@@ -1008,12 +1313,11 @@ function terminar() {
   jaTerminou = true;
   S.fase = "fim"; S.correndo = false; S.tFim = agora();
   ev("sessao_fim", { pontos: S.pontos, melhorSequencia: S.melhorSequencia,
-                     rondas: S.rondas });
+                     niveis: S.niveis });
   if (document.pointerLockElement) document.exitPointerLock();
   caixaMsg(null);
   mostra("t-fim");
   desenhaResumo();
-  montaTabela();
 }
 
 function desenhaResumo() {
@@ -1029,52 +1333,16 @@ function desenhaResumo() {
     "<h4>Resumo da sua sessão</h4><ul>" +
     "<li>Código anónimo: <code>" + S.id + "</code></li>" +
     "<li>Duração: cerca de " + dur + " minutos</li>" +
-    S.rondas.map(r => "<li>Ronda " + r.ronda + ": " + r.pontos.toLocaleString("pt-PT") +
-      " pontos, " + r.acertos + " alvos, " + r.precisao + " % de precisão</li>").join("") +
+    S.niveis.map(r => "<li>Nível " + r.nivel + " (" + r.nome + "): " +
+      r.acertos + " alvos, " + r.precisao + " % de precisão, " +
+      r.eventosTeclado + " eventos de teclado</li>").join("") +
     "<li>Amostras de movimento do rato: " + S.mouse.length.toLocaleString("pt-PT") + "</li>" +
     "<li>Eventos de teclado: " + S.teclas.length + "</li>" +
     "</ul><p class=\"nota\" style=\"margin:8px 0 0\">Qualidade técnica da captura: " +
     "movimento sem aceleração do sistema " + (S.unadjusted === true ? "sim" : "não") +
-    " · relógio de alta resolução " + (amb ? "sim" : "não") + "</p>";
+    " · relógio de alta resolução " + (amb ? "sim" : "não") +
+    " · versão " + CFG.versao + "</p>";
 }
-
-/* ---- Tabela de pontuações: vive só neste browser, nunca entra nos dados ---- */
-const LS = "aim-tabela-v1";
-function leTabela() {
-  try { return JSON.parse(localStorage.getItem(LS)) || []; } catch (e) { return []; }
-}
-function guardaTabela(t) {
-  try { localStorage.setItem(LS, JSON.stringify(t.slice(0, 20))); } catch (e) {}
-}
-function montaTabela() {
-  const tabela = leTabela();
-  const recorde = tabela.length ? Math.max(...tabela.map(x => x.pontos)) : 0;
-  if (S.pontos > recorde && tabela.length)
-    $("#pontuacao").insertAdjacentHTML("beforeend",
-      '<div class="recorde">Novo recorde neste computador</div>');
-  renderTabela();
-}
-function renderTabela() {
-  const tabela = leTabela().slice().sort((a, b) => b.pontos - a.pontos);
-  if (!tabela.length) { $("#tabela").innerHTML =
-    '<p class="nota" style="margin:0">Ainda não há pontuações guardadas neste computador.</p>'; return; }
-  $("#tabela").innerHTML = '<table class="tab"><tbody>' + tabela.slice(0, 10).map((x, i) =>
-    '<tr' + (x.id === S.id ? ' class="eu"' : '') + '><td>' + (i + 1) + '</td><td class="nm">' +
-    String(x.nome).replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c])) +
-    '</td><td class="pt">' + x.pontos.toLocaleString("pt-PT") + '</td></tr>').join("") +
-    '</tbody></table>';
-}
-$("#b-tabela").addEventListener("click", () => {
-  const nome = ($("#f-alcunha").value || "").trim().slice(0, 16) || "Anónimo";
-  const t = leTabela();
-  t.push({ nome, pontos: S.pontos, id: S.id, quando: Date.now() });
-  t.sort((a, b) => b.pontos - a.pontos);
-  guardaTabela(t);
-  S.alcunha = true;                       // só regista QUE houve alcunha, nunca qual
-  $("#b-tabela").textContent = "Adicionado";
-  $("#b-tabela").disabled = true;
-  renderTabela();
-});
 
 function montaFicheiro() {
   return {
@@ -1097,8 +1365,7 @@ function montaFicheiro() {
     },
     config: CFG,
     desempenho: { pontos: S.pontos, acertos: S.acertos, disparos: S.disparos,
-                  melhorSequencia: S.melhorSequencia, rondas: S.rondas,
-                  usouAlcunha: !!S.alcunha },
+                  melhorSequencia: S.melhorSequencia, niveis: S.niveis },
     mouse: S.mouse,     // [t_ms, dx, dy]
     teclas: S.teclas,   // [t_ms, code, 1=baixo 0=cima]
     vista: S.vista,     // [t_ms, yaw_rad, pitch_rad]

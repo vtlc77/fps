@@ -6,6 +6,15 @@ nunca saem da máquina do participante sem ele clicar em descarregar.
 
 ---
 
+## Qual versão estou a correr?
+
+O número aparece em baixo no ecrã de instruções, no resumo final, e no campo
+`schema` de cada ficheiro de sessão. **Versão atual: `aim-logger-1.2`.**
+
+Se publicar uma versão nova e o browser continuar a mostrar a antiga, é cache:
+`Ctrl+Shift+R` força o recarregamento. Vale a pena confirmar o número antes de
+reportar qualquer comportamento estranho — poupa tempo aos dois.
+
 ## ⚠ Antes de distribuir
 
 A página tem campos marcados `[A PREENCHER]`. Enquanto existir algum, aparece um
@@ -14,10 +23,11 @@ substitua:
 
 | Onde | O quê |
 |---|---|
-| Ecrã de consentimento | nome e email do responsável |
 | Ecrã de consentimento | nome do orientador |
 | Ecrã de consentimento | referência e data da aprovação ética |
-| Ecrã final | email para onde enviar o ficheiro |
+
+O responsável e o email de envio já estão preenchidos
+(Diogo Lage · `50056610@europeia.pt`).
 
 O aviso desaparece sozinho quando não restar nenhum `[A PREENCHER`.
 
@@ -80,31 +90,61 @@ e o `ler_sessao.py` marca as sessões em que não conseguiu.
 
 ## O que a sessão faz
 
-| Fase | Duração | O que acontece |
-|---|---|---|
-| Consentimento | — | Informação, o que é e não é recolhido, quatro caixas obrigatórias |
-| Formulário | — | Escalão etário, mão, experiência, e os dados do rato que o browser não deteta |
-| Instruções | — | Controlos e escolha de sensibilidade |
-| Calibração | ~1 min | 20 alvos em posições **fixas e iguais para todos**, câmara parada |
-| Tarefa livre | 3 min | Movimento WASD, até 3 alvos simultâneos, 40 % deles móveis |
-| Fim | — | Resumo e descarregamento do ficheiro |
+Três níveis, desenhados para **isolar as variáveis** em vez de as misturar.
 
-O bloco de calibração é o que permite comparar participantes diretamente: mesmas
-amplitudes angulares (8°, 16°, 26°), mesmas direções, dois tamanhos de alvo. É o
-bloco que dá a lei de Fitts.
+| Nível | Duração | Rato | Teclado | Obstáculos | O que isola |
+|---|---|---|---|---|---|
+| **1 — Mira** | ~1 min | sim | não | não | Cinemática pura do rato, sem interferência |
+| **2 — Mira e movimento** | 75 s | sim | sim | não | Coordenação rato↔teclado em campo aberto |
+| **3 — Mira, movimento e cobertura** | 75 s | sim | sim | **sim** | Movimento reativo sob restrição espacial |
+
+O **nível 1** usa uma sequência fixa de 20 alvos, igual para todos os participantes:
+amplitudes angulares de 8°, 16° e 26°, oito direções, dois tamanhos de alvo. É o
+bloco que dá a lei de Fitts e o único diretamente comparável entre pessoas.
+
+O **nível 3** tem dois tipos de obstáculo:
+
+- **Sete pilares fixos**, que tapam a linha de vista. Cerca de metade dos alvos
+  nasce de propósito atrás deles, e um alvo tapado aparece a cinzento com os
+  tiros a não contar. O participante tem de se deslocar para ganhar ângulo.
+- **Quatro blocos em movimento**, que atravessam a arena de lado a lado. Tapam
+  a linha de vista enquanto passam e **empurram o jogador** se o apanharem
+  parado, o que obriga a sair da frente.
+
+Os pilares criam deslocação deliberada; os blocos criam deslocação reativa. São
+duas coisas diferentes e juntas geram contra-strafes, mudanças de direção e
+toques curtos — exatamente o que faltava.
+
+Cada toque num bloco fica registado como evento `bloco_toque`.
+
+### Porque é que o nível 3 existe
+
+Numa sessão real de teste, no desenho anterior sem obstáculos:
+
+```
+0,65 eventos de teclado por segundo
+KeyA n=26 · KeyD n=13 · KeyW n=14 · KeyS n=3 · Space n=1
+KeyW com dwell mediano de 1382 ms e máximo de 16 484 ms
+```
+
+Três amostras do `S` não fazem distribuição nenhuma, e um `W` premido 16
+segundos é «andar em frente», não é dinâmica de teclado. Em campo aberto não há
+razão para o participante se mexer. Os obstáculos criam essa razão.
+
+Cada nível regista no ficheiro `eventosTeclado` e `teclasPorSegundo`, para que
+consiga verificar diretamente se o nível 3 está a cumprir o que promete.
 
 Para mudar as durações, no topo do `<script>`:
 
 ```js
-const CFG = { calibAlvos: 20, jogoSegundos: 180, ... };
+const CFG = { calibAlvos: 20, segundosNivel2: 75, segundosNivel3: 75,
+              nPilares: 7, nBlocos: 4, limiteArena: 16, ... };
 ```
-
----
 
 ## Gamificação
 
-O bloco livre está partido em **duas rondas de 90 segundos** com uma pausa e um
-resumo pelo meio. Mesmo tempo total, mas muito menos monótono.
+Os três níveis têm pausa e resumo entre eles, o que corta a monotonia sem
+encurtar a recolha. A pontuação começa no nível 2.
 
 - **Pontuação** visível no HUD: alvos pequenos valem mais, alvos em movimento
   valem 1,35×, e rapidez multiplica até 3×.
@@ -112,17 +152,12 @@ resumo pelo meio. Mesmo tempo total, mas muito menos monótono.
 - **Feedback** em cada acerto: anel a expandir no alvo, pontos a subir, mira a
   mudar de cor. Nada disto mexe na câmara — o traço da mira tem de ficar limpo
   para a análise.
-- **Tabela de pontuações** no ecrã final, com alcunha opcional.
+- **Resumo por nível** no ecrã final, com os eventos de teclado de cada um.
 
-### A alcunha nunca sai do browser
-
-A tabela vive em `localStorage`, só naquele computador. É útil quando testa
-várias pessoas no mesmo portátil: cada uma vê-se na lista e a seguinte quer
-bater a anterior.
-
-O ficheiro de dados guarda `desempenho.usouAlcunha: true/false` — **nunca a
-alcunha**. O teste automático verifica isso explicitamente: escreve um nome
-reconhecível, exporta o ficheiro e confirma que a string não aparece lá dentro.
+Não há tabela de pontuações. Sem servidor, a tabela só existia naquele browser
+e para aquela pessoa, o que a tornava inútil para toda a gente menos para quem
+testasse várias pessoas no mesmo portátil. Não compensava o peso que
+acrescentava ao texto de consentimento.
 
 ### O que isto custa em rigor
 
@@ -139,7 +174,7 @@ separar sessões recolhidas com e sem pontuação, se decidir testar o efeito.
 de servidor, voltaria a pôr-lhe responsabilidade de alojamento em cima, e
 sobretudo criaria incentivo para alguém usar assistência de mira para chegar ao
 topo — o que lhe contaminava a classe humana com amostras automatizadas mal
-rotuladas. A tabela local evita as três coisas.
+rotuladas. Se um dia a quiser, conte com esses três problemas.
 
 ## O ficheiro de dados
 
@@ -161,11 +196,16 @@ Uma sessão completa dá tipicamente 2 a 5 MB em JSON, cerca de 300 KB comprimid
   "teclas": [[t_ms, "KeyW", 1|0], ...],     // 1 = premida, 0 = largada
   "vista":  [[t_ms, yaw_rad, pitch_rad]],   // um por frame
   "eventos": [
-    { "t": …, "tipo": "alvo_aparece", "id": 3, "x": …, "y": …, "z": …,
-      "raio": 0.42, "movel": false, "erroAngularInicial": 12.4 },
+    { "t": …, "tipo": "nivel_inicio", "nivel": 3, "nome": "Mira, movimento e cobertura",
+      "obstaculos": true, "pilares": [{ "x": 5.5, "z": 0.0, "r": 0.72, "h": 3.6 }, …] },
+    { "t": …, "tipo": "alvo_aparece", "id": 3, "nivel": 3, "x": …, "y": …, "z": …,
+      "raio": 0.42, "movel": false, "tapado": true,
+      "posJogador": { "x": 2.1, "z": -4.3 }, "erroAngularInicial": 12.4 },
     { "t": …, "tipo": "disparo", "acertou": true, "alvo": 3,
       "erroGraus": 0.31, "tempoDesdeAparecer": 642.1,
-      "tempoDesdePrimeiroMov": 418.7, "fase": "calib" },
+      "tempoDesdePrimeiroMov": 418.7, "nivel": 1, "pontos": 340 },
+    { "t": …, "tipo": "disparo", "acertou": false, "nivel": 3,
+      "bloqueadoPorPilar": true },
     { "t": …, "tipo": "botao", "estado": "baixo" }
   ]
 }

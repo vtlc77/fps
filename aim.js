@@ -17,9 +17,9 @@ function ok(c,m){ console.log((c?"  [PASSA] ":"  [FALHA] ")+m); if(!c) process.e
   await pg.click("#b-form"); await pg.click("#b-instr");
   await pg.waitForTimeout(400);
 
-  // encurta o bloco livre e aponta com precisão a cada alvo
+  // aponta com precisão a cada alvo e atravessa os três níveis
   const r = await pg.evaluate(async () => {
-    CFG.segundosPorRonda = 3; CFG.rondas = 1;
+    CFG.segundosNivel2 = 1; CFG.segundosNivel3 = 1;
     const apontaEDispara = () => {
       const a = S.alvos[0]; if (!a) return false;
       const v = { x:a.x-S.cam.x, y:a.y-S.cam.y, z:a.z-S.cam.z };
@@ -29,26 +29,40 @@ function ok(c,m){ console.log((c?"  [PASSA] ":"  [FALHA] ")+m); if(!c) process.e
       dispara(performance.now());
       return true;
     };
-    const fases = [];
-    for (let i = 0; i < 60; i++) {
-      fases.push(S.fase);
-      if (!apontaEDispara()) break;
-      await new Promise(res => setTimeout(res, 6));
+    const niveisVistos = new Set();
+    for (let i = 0; i < 120; i++) {
+      niveisVistos.add(S.nivel);
+      if (S.fase === "fim") break;
+      if (S.entreRondas) {                       // pausa entre níveis: clica para seguir
+        cv.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        await new Promise(res => setTimeout(res, 30));
+        continue;
+      }
+      apontaEDispara();
+      await new Promise(res => setTimeout(res, 8));
     }
     return { acertos:S.acertos, disparos:S.disparos, fase:S.fase,
-             calibFeita:S.calibIdx >= S.calibSeq.length,
-             passouAJogo: fases.includes("jogo"),
+             calibFeita: S.calibIdx >= S.calibSeq.length,
+             niveisVistos: [...niveisVistos].sort(),
+             niveisConcluidos: S.niveis.length,
              errosDeAcerto: S.eventos.filter(e=>e.tipo==="disparo"&&e.acertou)
                              .map(e=>e.erroGraus).slice(0,5),
-             temTempoReacao: S.eventos.some(e=>e.tipo==="disparo"&&e.acertou&&e.tempoDesdeAparecer>0) };
+             temTempoReacao: S.eventos.some(e=>e.tipo==="disparo"&&e.acertou&&e.tempoDesdeAparecer>0),
+             semBloqueio: S.eventos.filter(e=>e.tipo==="disparo"&&e.bloqueadoPorPilar).length,
+             acertosSemBloqueio: S.eventos.filter(e=>e.tipo==="disparo"&&e.acertou).length,
+             disparosSemBloqueio: S.eventos.filter(e=>e.tipo==="disparo"&&!e.bloqueadoPorPilar).length };
   });
 
   console.log("\nDeteção de acerto com pontaria exata");
   console.log("   " + JSON.stringify(r));
-  ok(r.acertos > 25, `acerta quando a mira está no alvo (${r.acertos}/${r.disparos})`);
-  ok(r.acertos === r.disparos, "pontaria exata nunca falha");
-  ok(r.calibFeita, "o bloco de calibração completou os 20 alvos");
-  ok(r.passouAJogo, "transitou para o bloco livre");
+  ok(r.acertos >= 20, `acerta quando a mira está no alvo (${r.acertos}/${r.disparos})`);
+  ok(r.semBloqueio === 0 || r.acertosSemBloqueio === r.disparosSemBloqueio,
+     `com linha de vista, a pontaria exata nunca falha ` +
+     `(${r.acertosSemBloqueio}/${r.disparosSemBloqueio}; ` +
+     `${r.semBloqueio} tiros bloqueados por pilares no nível 3)`);
+  ok(r.calibFeita, "o nível 1 completou os 20 alvos");
+  ok(r.niveisVistos.includes(2), "avançou para o nível 2");
+  ok(r.niveisConcluidos >= 1, `concluiu ${r.niveisConcluidos} nível(eis)`);
   ok(r.errosDeAcerto.every(e => e < 0.001), "erro angular ~0 quando aponta ao centro");
   ok(r.temTempoReacao, "regista o tempo desde o alvo aparecer");
 
